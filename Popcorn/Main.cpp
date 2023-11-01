@@ -73,7 +73,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hInstance      = hInstance;
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_POPCORN));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground  = CreateSolidBrush(RGB(0, 0, 0));
+    wcex.hbrBackground  = CreateSolidBrush(RGB(15, 63, 31));  // Замена параметров на более читаемые(макрос RGB))
     wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_POPCORN);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
@@ -81,7 +81,6 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     return RegisterClassExW(&wcex);
 }
 //--------------------------------------------------------------------------------------------------------------
-//
 //   FUNCTION: InitInstance(HINSTANCE, int)
 //
 //   PURPOSE: Saves instance handle and creates main window
@@ -95,7 +94,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // Store instance handle in our global variable
 
-   RECT window_rect;
+   Init();
+
+   RECT window_rect;  // Структура для создания размера пользовательского окна
    window_rect.left = 0;
    window_rect.top = 0;
    window_rect.right = 320 * 3;
@@ -115,12 +116,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 //--------------------------------------------------------------------------------------------------------------
-void Draw_Frame(HDC hdc)
-{ // Отрисовка экрана игры
-   Rectangle(hdc, 8 * 3, 6 * 3, (8 + 15) * 3, (6 + 7) * 3); // Отрисовка прямоугольника 
-}
-//--------------------------------------------------------------------------------------------------------------
-//
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
 //  PURPOSE: Processes messages for the main window.
@@ -158,7 +153,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: Add any drawing code that uses hdc here...
-            Draw_Frame(hdc);
+            Draw_Frame(hdc); // Функция отрисовки элементов игры
             EndPaint(hWnd, &ps);
         }
         break;
